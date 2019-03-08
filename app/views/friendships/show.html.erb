@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>New Friendship:</strong>
+  <%= @friendship.friend.email %> and <%= @friendship.user.email %>
+</p>
+
+<%= link_to 'Delete Friendship', friendship_path(@friendship), method: :delete, data: { confirm: 'Are you sure?'} %> |
+<%= link_to 'Back', friendships_path %>

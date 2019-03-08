@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Friendship Page</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Friends:</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @friends.each do |friendship| %>
+      <tr>
+      <% unless friendship.nil? %>
+        <td><%= friendship.email %></td>
+        <td><%= link_to 'Destroy', friendship_path(friendship), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+    <thead>
+    <tr>
+      <th>Friend Request Sent:</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @requests_sent.each do |friendship| %>
+      <tr>
+      <% unless friendship.nil? %>
+        <td><%= friendship.email %></td>
+        <td><%= link_to 'Destroy', friendship_path(friendship), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+    <thead>
+    <tr>
+      <th>Friend Request Received:</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @received_requests.each do |friendship| %>
+      <tr>
+      <% unless friendship.nil? %>
+        <td><%= friendship.email %></td>
+        <td><%= link_to 'Accept Request', friendship_path(friendship), method: :put %> | </td> 
+        <td><%= link_to 'Delete Request', friendship_path(friendship), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back', root_path %>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fakebook</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if current_user.nil? %>
+      <%= link_to "Signin", new_user_session_path %>
+    <% else %>
+      Logged In: <%= current_user.email %> |
+      <%= link_to "Home", root_path %> |
+      <%= link_to "SeeUsers", users_path %> |
+      <%= link_to "FriendsList", friendships_path %> |
+      You have <%= current_user.received_requests.length %> friend requests |
+      <%= link_to "MyProfile", user_path(current_user) %> |
+      <%= link_to "LogOut", destroy_user_session_path, method: :delete %>
+    <% end %>  
+    <%= yield %>
+  </body>
+</html>

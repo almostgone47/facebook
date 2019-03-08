@@ -1,0 +1,58 @@
+<h1>Welcome to Facebook!</h1>
+  
+  <%= form_for(@post, url: posts_path) do |f| %>
+    <%= f.text_field :body %>
+    <%= f.submit "Post" %>
+  <% end %>
+  
+  <% @posts.each do |post| %>
+    <p><%= post.body %></p>
+    <small><%= time_ago_in_words(post.created_at) %> ago <%= time_ago_in_words(post.updated_at) %>
+    ~ <%= post.user.email %>
+    (<%= post.likes.count %>
+    
+    <% if post.likes.find_by(user_id: current_user.id) %>
+      <%= link_to "Unlike", like_path(id: post.id), method: :delete %>)</small>
+    <% else %>
+      <%= link_to "Like", likes_path(likable_id: post.id, likable_type: 'Post'), method: :post %>)</small>
+    <% end %>
+    
+    <%= form_for [post, Comment.new] do |f| %>
+      <%= f.text_field :body %>
+      <%= f.submit "Comment" %>
+    <% end %>
+    
+    <hr>
+  
+    <% post.comments.each do |comment| %>
+      <p><%= comment.body %>
+      <small>(<%= comment.likes.count %>
+        <% if comment.likes.find_by(user_id: current_user.id) %>
+          <%= link_to "Unlike", like_path(id: comment.id), method: :delete %>)</small>
+        <% else %>
+          <%= link_to "Like", likes_path(likable_id: comment.id, likable_type: 'Comment'), method: :post %>)</small>
+        <% end %>
+      </p>
+
+      <small>
+        <%= form_for [comment, Comment.new] do |f| %>
+          <P><%= f.text_field :body %>
+          <%= f.submit "Comment-comment" %></p>
+        <% end %>
+      </small>
+
+      <% comment.comments.each do |comment| %>
+        <p><small>
+          <%= comment.body %> 
+          ~ <%= comment.user.email %>
+          (<%= comment.likes.count %>
+            <% if comment.likes.find_by(user_id: current_user.id) %>
+              <%= link_to "Unlike", like_path(id: comment.id), method: :delete %>)</small>
+            <% else %>
+              <%= link_to "Like", likes_path(likable_id: comment.id, likable_type: 'Comment'), method: :post %>)</small>
+            <% end %>
+        </small></p>
+      <% end %>
+
+    <% end %> 
+  <% end %>  

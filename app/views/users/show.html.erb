@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+<p><%= gravatar_for(@user)%></p>
+<p><small>User Email: <%= @user.email %></small></p>
+<p><small>User Joined: <%= @user.created_at %></small></p>
+<p><small>Last Update: <%= @user.updated_at %></small></p>
+
+<% @posts.each do |post| %>
+  <p><%= post.body %>
+  <small><%= time_ago_in_words(post.created_at) %> ago
+  <%= link_to "delete", post_path(post), method: :delete %></small>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
